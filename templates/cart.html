@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}My Cart - MyShop{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h1 class="mb-4">
+        My Shopping Cart
+    </h1>
+
+    <div
+        id="cartMessage"
+        class="mb-3"
+    ></div>
+
+    <div
+        id="cartContainer"
+        class="row"
+    >
+
+        <div class="col-12 text-center">
+            <p>Loading cart...</p>
+        </div>
+
+    </div>
+
+    <div
+        id="cartTotal"
+        class="text-end mt-4"
+    ></div>
+
+    <div class="text-end mt-3">
+
+        <a
+            href="{% url 'checkout' %}"
+            class="btn btn-success"
+        >
+            Proceed to Checkout
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="/static/js/cart.js"></script>
+
+{% endblock %}

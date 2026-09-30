@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Login - MyShop{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-5">
+
+            <div class="card shadow">
+
+                <div class="card-body p-4">
+
+                    <h2 class="text-center mb-4">
+                        Login
+                    </h2>
+
+                    <div
+                        id="loginMessage"
+                        class="mb-3"
+                    ></div>
+
+                    <form id="loginForm">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Username
+                            </label>
+
+                            <input
+                                type="text"
+                                id="username"
+                                class="form-control"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Password
+                            </label>
+
+                            <input
+                                type="password"
+                                id="password"
+                                class="form-control"
+                                required
+                            >
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100"
+                        >
+                            Login
+                        </button>
+
+                    </form>
+
+                    <p class="text-center mt-3">
+
+                        Don't have an account?
+
+                        <a href="{% url 'register' %}">
+                            Register
+                        </a>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="/static/js/login.js"></script>
+
+{% endblock %}

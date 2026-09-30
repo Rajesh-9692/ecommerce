@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - MyShop{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <div class="card shadow">
+
+                <div class="card-body p-4">
+
+                    <h2 class="mb-4 text-center">
+                        My Profile
+                    </h2>
+
+                    <div id="profileContainer">
+
+                        <p>
+                            Loading profile...
+                        </p>
+
+                    </div>
+
+                    <button
+                        id="logoutBtn"
+                        class="btn btn-danger w-100 mt-4"
+                    >
+                        Logout
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="/static/js/profile.js"></script>
+
+{% endblock %}

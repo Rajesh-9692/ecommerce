@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}My Orders - MyShop{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h1 class="mb-4">
+        My Orders
+    </h1>
+
+    <div
+        id="ordersContainer"
+        class="row g-4"
+    >
+
+        <div class="col-12 text-center">
+            <p>Loading orders...</p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="/static/js/orders.js"></script>
+
+{% endblock %}
