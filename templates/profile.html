@@ -3,46 +3,158 @@
 {% block title %}Profile - MyShop{% endblock %}
 
 {% block content %}
+<div class="account-page">
+    <div class="container account-shell">
+        <header class="account-page-heading">
+            <div>
+                <p class="account-eyebrow">YOUR MYSHOP</p>
+                <h1>My account</h1>
+                <p class="account-intro">Your details, orders, and everyday finds in one place.</p>
+            </div>
+            <a class="account-text-link" href="{% url 'products' %}">Continue shopping <span aria-hidden="true">&rarr;</span></a>
+        </header>
 
-<div class="container py-5">
+        <div id="profileMessage" class="account-message" role="status" aria-live="polite" hidden></div>
 
-    <div class="row justify-content-center">
+        <section id="profileGuestState" class="account-empty account-guest" hidden>
+            <div class="account-empty-icon" aria-hidden="true">&#8594;</div>
+            <h2>Sign in to view your account</h2>
+            <p>Your orders, cart, and account details will be here when you sign in.</p>
+            <a class="btn btn-primary" href="/login/">Log in</a>
+            <a class="account-secondary-link" href="/register/">Create an account</a>
+        </section>
 
-        <div class="col-md-6">
-
-            <div class="card shadow">
-
-                <div class="card-body p-4">
-
-                    <h2 class="mb-4 text-center">
-                        My Profile
-                    </h2>
-
-                    <div id="profileContainer">
-
-                        <p>
-                            Loading profile...
-                        </p>
-
-                    </div>
-
-                    <button
-                        id="logoutBtn"
-                        class="btn btn-danger w-100 mt-4"
-                    >
-                        Logout
-                    </button>
-
+        <div id="profileDashboard" class="account-dashboard" hidden aria-busy="true">
+            <section class="account-profile-card" aria-labelledby="profileName">
+                <div id="profileAvatar" class="account-avatar" aria-hidden="true">M</div>
+                <div class="account-profile-identity">
+                    <p class="account-eyebrow">PROFILE</p>
+                    <h2 id="profileName">Loading account...</h2>
+                    <p id="profileEmail" class="account-profile-email">Loading email...</p>
                 </div>
+                <div class="account-profile-actions">
+                    <button class="btn account-btn-secondary" id="editProfileBtn" type="button" aria-controls="editProfileForm" aria-expanded="false">Edit profile</button>
+                    <button class="btn account-btn-danger" id="logoutBtn" type="button">Log out</button>
+                </div>
+            </section>
 
+            <section class="account-summary-grid" aria-label="Account summary">
+                <a class="account-summary-card" href="{% url 'orders' %}">
+                    <span class="account-summary-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M5 4.5h14v15H5z"></path><path d="M8.5 8h7M8.5 11.5h7M8.5 15h4"></path></svg>
+                    </span>
+                    <span class="account-summary-value" id="ordersCount">—</span>
+                    <span class="account-summary-label">My orders</span>
+                    <span class="account-summary-arrow" aria-hidden="true">&rarr;</span>
+                </a>
+                <a class="account-summary-card" href="{% url 'cart' %}">
+                    <span class="account-summary-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M3.5 4.5h2l2.1 10.2a2 2 0 0 0 2 1.6h8.1a2 2 0 0 0 1.9-1.5L21 8H6"></path><circle cx="9.5" cy="19.5" r="1"></circle><circle cx="17.5" cy="19.5" r="1"></circle></svg>
+                    </span>
+                    <span class="account-summary-value" id="cartCount">—</span>
+                    <span class="account-summary-label">Cart items</span>
+                    <span class="account-summary-arrow" aria-hidden="true">&rarr;</span>
+                </a>
+                <a class="account-summary-card" href="{% url 'home' %}#recommended">
+                    <span class="account-summary-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="m12 3 1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3Z"></path><path d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"></path></svg>
+                    </span>
+                    <span class="account-summary-value account-summary-word" id="recommendationsCount">—</span>
+                    <span class="account-summary-label">AI recommendations</span>
+                    <span class="account-summary-arrow" aria-hidden="true">&rarr;</span>
+                </a>
+                <a class="account-summary-card" href="#personalInformation">
+                    <span class="account-summary-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"></circle><path d="M5 20a7 7 0 0 1 14 0"></path></svg>
+                    </span>
+                    <span class="account-summary-value account-summary-word">Your details</span>
+                    <span class="account-summary-label">Account profile</span>
+                    <span class="account-summary-arrow" aria-hidden="true">&rarr;</span>
+                </a>
+            </section>
+
+            <div class="account-content-grid">
+                <section class="account-panel account-information" id="personalInformation" aria-labelledby="personalInformationTitle">
+                    <div class="account-panel-heading">
+                        <div>
+                            <p class="account-eyebrow">ACCOUNT DETAILS</p>
+                            <h2 id="personalInformationTitle">Personal information</h2>
+                        </div>
+                        <span class="account-lock-label">Account details</span>
+                    </div>
+                    <div class="account-information-grid">
+                        <div class="account-info-item">
+                            <span class="account-info-label">Username</span>
+                            <span class="account-info-value" id="usernameValue">—</span>
+                        </div>
+                        <div class="account-info-item">
+                            <span class="account-info-label">Email address</span>
+                            <span class="account-info-value" id="emailValue">—</span>
+                        </div>
+                    </div>
+                    <form id="editProfileForm" class="account-edit-form" hidden novalidate>
+                        <p class="account-edit-heading">Update the details associated with your account.</p>
+                        <div class="account-edit-fields">
+                            <div>
+                                <label for="editUsername">Username</label>
+                                <input id="editUsername" name="username" type="text" autocomplete="username" maxlength="150" required>
+                            </div>
+                            <div>
+                                <label for="editEmail">Email address</label>
+                                <input id="editEmail" name="email" type="email" autocomplete="email" maxlength="254" required>
+                            </div>
+                        </div>
+                        <p id="editProfileError" class="account-edit-error" role="alert" hidden></p>
+                        <div class="account-edit-form-actions">
+                            <button class="btn btn-primary" id="saveProfileBtn" type="submit">Save changes</button>
+                            <button class="btn account-btn-secondary" id="cancelProfileEditBtn" type="button">Cancel</button>
+                        </div>
+                    </form>
+                    <p class="account-note" id="accountDetailsNote">Your profile details are only visible to you.</p>
+                </section>
+
+                <section class="account-panel account-recommendations" aria-labelledby="accountRecommendationsTitle">
+                    <div class="account-recommendation-art" aria-hidden="true">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <p class="account-eyebrow">A LITTLE INSPIRATION</p>
+                    <h2 id="accountRecommendationsTitle">Picked for you</h2>
+                    <p id="recommendationsMessage">Your recommendations will appear here.</p>
+                    <a class="account-text-link" href="{% url 'home' %}#recommended">Explore recommendations <span aria-hidden="true">&rarr;</span></a>
+                </section>
             </div>
 
+            <section class="account-panel account-orders-panel" aria-labelledby="recentOrdersTitle">
+                <div class="account-panel-heading">
+                    <div>
+                        <p class="account-eyebrow">YOUR PURCHASES</p>
+                        <h2 id="recentOrdersTitle">Recent orders</h2>
+                    </div>
+                    <a class="account-text-link" href="{% url 'orders' %}">View all orders <span aria-hidden="true">&rarr;</span></a>
+                </div>
+                <div id="recentOrders" class="account-recent-orders" aria-live="polite">
+                    <div class="account-inline-state" role="status">Loading your orders...</div>
+                </div>
+            </section>
+
+            <nav class="account-panel account-actions" aria-label="Account shortcuts">
+                <div class="account-panel-heading">
+                    <div>
+                        <p class="account-eyebrow">QUICK ACCESS</p>
+                        <h2>Account actions</h2>
+                    </div>
+                </div>
+                <div class="account-action-links">
+                    <a href="{% url 'orders' %}"><span aria-hidden="true">▤</span>My orders <span class="account-action-arrow" aria-hidden="true">&rarr;</span></a>
+                    <a href="{% url 'cart' %}"><span aria-hidden="true">⌑</span>My cart <span class="account-action-arrow" aria-hidden="true">&rarr;</span></a>
+                    <a href="{% url 'home' %}#recommended"><span aria-hidden="true">✳</span>AI recommendations <span class="account-action-arrow" aria-hidden="true">&rarr;</span></a>
+                    <a href="#personalInformation"><span aria-hidden="true">◎</span>Account details <span class="account-action-arrow" aria-hidden="true">&rarr;</span></a>
+                    <button id="accountLogoutLink" type="button"><span aria-hidden="true">↗</span>Log out <span class="account-action-arrow" aria-hidden="true">&rarr;</span></button>
+                </div>
+            </nav>
         </div>
-
     </div>
-
 </div>
-
 {% endblock %}
 
 {% block extra_js %}

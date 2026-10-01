@@ -3,165 +3,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f7f8f6">
     <title>{% block title %}MyShop{% endblock %}</title>
-
-    <!-- Bootstrap -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
-
-    <!-- Our CSS -->
-    <link
-        rel="stylesheet"
-        href="{% static 'css/style.css' %}"
-    >
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-
 <body>
-
-<!-- ================= NAVBAR ================= -->
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
-    <div class="container">
-
-        <a class="navbar-brand fw-bold"
-           href="{% url 'home' %}">
-            MyShop
-        </a>
-
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-        >
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div
-            class="collapse navbar-collapse"
-            id="navbarNav"
-        >
-
-            <ul class="navbar-nav ms-auto">
-
-                <li class="nav-item">
-                    <a
-                        class="nav-link"
-                        href="{% url 'home' %}"
-                    >
-                        Home
+<a class="skip-link" href="#mainContent">Skip to content</a>
+<header class="site-header">
+    <nav class="navbar navbar-expand-lg" aria-label="Main navigation">
+        <div class="container site-nav">
+            <a class="navbar-brand site-brand" href="{% url 'home' %}" aria-label="MyShop home">
+                <span class="brand-mark" aria-hidden="true">M</span>
+                <span>my<span class="brand-accent">shop</span></span>
+            </a>
+            <button class="navbar-toggler site-nav-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <form class="nav-search" id="navSearchForm" role="search" action="{% url 'products' %}" method="get">
+                    <label class="visually-hidden" for="navSearchInput">Search products</label>
+                    <input id="navSearchInput" name="search" type="search" placeholder="Search products, brands..." autocomplete="off">
+                    <button type="submit" aria-label="Search">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
+                    </button>
+                </form>
+                <ul class="navbar-nav site-nav-links">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'products' %}">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'categories' %}">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#recommended">For you</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'orders' %}">Orders</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a class="nav-icon-link" href="{% url 'cart' %}" aria-label="Shopping cart">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 1.9-1.4L21 8H6"></path><circle cx="9.5" cy="19.5" r="1"></circle><circle cx="17.5" cy="19.5" r="1"></circle></svg>
+                        <span>Cart</span>
                     </a>
-                </li>
-
-                <li class="nav-item">
-                    <a
-                        class="nav-link"
-                        href="{% url 'products' %}"
-                    >
-                        Products
+                    <a class="nav-icon-link" href="{% url 'profile' %}" aria-label="Your profile">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20a7 7 0 0 1 14 0"></path></svg>
+                        <span>Account</span>
                     </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'categories' %}">
-                        Categories
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a
-                        class="nav-link"
-                        href="{% url 'cart' %}"
-                    >
-                        Cart
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a
-                        class="nav-link"
-                        href="{% url 'orders' %}"
-                    >
-                        Orders
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a
-                        class="nav-link"
-                        href="{% url 'profile' %}"
-                    >
-                        Profile
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a
-                        class="nav-link"
-                        id="authLink"
-                        href="{% url 'login' %}"
-                    >
-                        Login
-                    </a>
-                </li>
-
-            </ul>
-
+                    <a class="auth-link" id="authLink" href="{% url 'login' %}">Login</a>
+                </div>
+            </div>
         </div>
-
-    </div>
-
-</nav>
-
-
-<!-- ================= MAIN CONTENT ================= -->
-
-<main>
-
-    {% block content %}
-
-    {% endblock %}
-
+    </nav>
+</header>
+<main id="mainContent">
+    {% block content %}{% endblock %}
 </main>
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer class="bg-dark text-white text-center py-4 mt-5">
-
-    <p class="mb-0">
-        MyShop © 2026
-    </p>
-
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <a class="site-brand footer-brand" href="{% url 'home' %}"><span class="brand-mark" aria-hidden="true">M</span><span>my<span class="brand-accent">shop</span></span></a>
+        <p>Thoughtful finds for everyday living.</p>
+        <span>© 2026 MyShop</span>
+    </div>
 </footer>
-
-
-<!-- Bootstrap JavaScript -->
-
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-</script>
-
-
-<!-- Our JavaScript -->
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{% static 'js/api.js' %}"></script>
 <script src="{% static 'js/app.js' %}"></script>
-
-
-{% block extra_js %}
-
-{% endblock %}
-
+{% block extra_js %}{% endblock %}
 </body>
 </html>

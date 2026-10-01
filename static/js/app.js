@@ -1,5 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+    const searchForm = document.getElementById("navSearchForm");
+
+    if (searchForm) {
+        searchForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const query = document.getElementById("navSearchInput").value.trim();
+            window.location.href = "/products/?search=" + encodeURIComponent(query);
+        });
+    }
+
     const authLink = document.getElementById("authLink");
 
     if (!authLink) {

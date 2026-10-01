@@ -3,23 +3,45 @@
 {% block title %}Product Details - MyShop{% endblock %}
 
 {% block content %}
+<section class="detail-page">
+    <div class="container detail-shell">
+        <nav class="detail-breadcrumb" aria-label="Breadcrumb">
+            <a href="{% url 'home' %}">Home</a><span aria-hidden="true">/</span>
+            <a href="{% url 'products' %}">Shop</a><span aria-hidden="true">/</span>
+            <span aria-current="page">Product details</span>
+        </nav>
 
-<div class="container py-5">
-
-    <div id="productDetails">
-
-        <div class="text-center">
-            <p>Loading product...</p>
+        <div id="productDetails" aria-live="polite" aria-busy="true">
+            <div class="detail-loading" role="status">
+                <div class="detail-loading-image"></div>
+                <div class="detail-loading-copy"><i></i><b></b><i></i><strong></strong><em></em></div>
+            </div>
         </div>
 
+        <section class="detail-related" id="relatedProductsSection" hidden aria-labelledby="relatedProductsTitle">
+            <div class="detail-section-heading">
+                <div><p class="products-eyebrow">MORE TO EXPLORE</p><h2 id="relatedProductsTitle">Related products</h2></div>
+                <a class="account-text-link" href="{% url 'products' %}">View all products <span aria-hidden="true">&rarr;</span></a>
+            </div>
+            <div class="related-products-grid" id="relatedProducts"></div>
+        </section>
+
+        <section class="detail-recommendations" id="detailRecommendationsSection" aria-labelledby="detailRecommendationsTitle">
+            <div class="detail-section-heading">
+                <div><p class="products-eyebrow">PICKED AROUND YOUR INTERESTS</p><h2 id="detailRecommendationsTitle">Recommended For You</h2><p>Picked based on your activity.</p></div>
+                <span class="products-ai-mark" aria-hidden="true">✳</span>
+            </div>
+            <div id="recommended" class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3 g-lg-4">
+                <div class="col-12"><div class="state-message" role="status">Loading recommendations...</div></div>
+            </div>
+        </section>
     </div>
-
-</div>
-
+</section>
 {% endblock %}
 
 {% block extra_js %}
 
 <script src="/static/js/product-details.js"></script>
+<script src="/static/js/recommendations.js"></script>
 
 {% endblock %}

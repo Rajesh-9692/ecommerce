@@ -3,7 +3,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import RegisterSerializer
+from .serializers import ProfileSerializer, RegisterSerializer
 
 
 class RegisterView(generics.CreateAPIView):
@@ -22,3 +22,14 @@ class ProfileView(APIView):
             "username": request.user.username,
             "email": request.user.email,
         })
+
+    def patch(self, request):
+        serializer = ProfileSerializer(
+            request.user,
+            data=request.data,
+            partial=True
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data)
