@@ -49,24 +49,34 @@ document.addEventListener("DOMContentLoaded", function () {
             const data = await response.json();
 
             if (!response.ok) {
-                const validationMessage = data.username
-                    ? "That username is unavailable. Choose another one."
-                    : data.email
-                        ? "Enter a valid email address."
-                        : "We couldn’t create your account. Check your details and try again.";
+
+                const validationMessage =
+                    data.username
+                        ? "That username is unavailable. Choose another one."
+                        : data.email
+                            ? "Enter a valid email address."
+                            : "We couldn't create your account. Check your details and try again.";
+
                 throw new Error(validationMessage);
             }
 
-            messageBox.className = "alert alert-success mb-3";
-            messageBox.textContent = "Account created. You can now sign in.";
+            messageBox.className =
+                "alert alert-success mb-3";
+
+            messageBox.textContent =
+                "Account created. You can now sign in.";
 
             window.setTimeout(function () {
                 window.location.href = "/login/";
             }, 900);
 
         } catch (error) {
-            messageBox.className = "alert alert-danger mb-3";
-            messageBox.textContent = error.message;
+
+            messageBox.className =
+                "alert alert-danger mb-3";
+
+            messageBox.textContent =
+                error.message;
         }
 
     });
