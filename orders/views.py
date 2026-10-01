@@ -6,6 +6,7 @@ from cart.models import Cart, CartItem
 from products.models import Product
 
 from .models import Order, OrderItem
+from .emails import send_order_confirmation
 
 from recommendations.utils import track_activity
 
@@ -198,3 +199,8 @@ class OrderViewSet(viewsets.ModelViewSet):
             order.save()
 
             cart_items.delete()
+
+            transaction.on_commit(
+                lambda order_id=order.pk: send_order_confirmation(order_id),
+                robust=True
+            )

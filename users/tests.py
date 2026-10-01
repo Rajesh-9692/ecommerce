@@ -1,9 +1,11 @@
 from django.contrib.auth.models import User
+from django.test import override_settings
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
 
+@override_settings(SECURE_SSL_REDIRECT=False)
 class ProfileApiTests(APITestCase):
 	def setUp(self):
 		self.user = User.objects.create_user(
@@ -51,3 +53,21 @@ class ProfileApiTests(APITestCase):
 		)
 
 		self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+@override_settings(SECURE_SSL_REDIRECT=False)
+class RegisterApiEmailTests(APITestCase):
+	def test_registration_saves_email_address(self):
+		response = self.client.post(
+			"/users/api/register/",
+			{
+				"username": "new-shopper",
+				"email": "new-shopper@example.com",
+				"password": "test-password"
+			},
+			format="json"
+		)
+
+		self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+		user = User.objects.get(username="new-shopper")
+		self.assertEqual(user.email, "new-shopper@example.com")

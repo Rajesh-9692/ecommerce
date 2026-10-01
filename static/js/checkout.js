@@ -33,8 +33,23 @@ document.addEventListener("DOMContentLoaded", async function () {
         return;
     }
 
+    placeOrderButton.disabled = true;
 
     try {
+
+        const profile = await apiRequest("/users/api/profile/");
+        const hasEmail = Boolean(
+            profile.email && profile.email.trim()
+        );
+
+        if (!hasEmail) {
+            checkoutMessage.innerHTML = `
+                <div class="alert alert-warning">
+                    Add an email address to your account to receive order confirmations.
+                    <a href="/profile/" class="alert-link">Update your profile</a>, then return to checkout.
+                </div>
+            `;
+        }
 
         const items = await getCartItems();
 
@@ -96,6 +111,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             </h4>
         `;
 
+        placeOrderButton.disabled = !hasEmail;
+
 
         /* ================================
            PLACE ORDER
@@ -104,6 +121,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         placeOrderButton.addEventListener(
             "click",
             async function () {
+
+                if (!hasEmail) {
+                    return;
+                }
 
                 placeOrderButton.disabled = true;
 
