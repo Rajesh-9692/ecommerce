@@ -22,12 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+IS_RENDER = bool(os.environ.get("RENDER_EXTERNAL_HOSTNAME"))
+DEBUG = os.environ.get("DEBUG", "False" if IS_RENDER else "True") == "True"
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
-if os.environ.get("RENDER_EXTERNAL_HOSTNAME"):
-    ALLOWED_HOSTS.append(os.environ.get("RENDER_EXTERNAL_HOSTNAME"))
+if IS_RENDER:
+    ALLOWED_HOSTS.append(os.environ["RENDER_EXTERNAL_HOSTNAME"])
 
 
 # =========================================================
