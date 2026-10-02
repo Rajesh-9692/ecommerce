@@ -203,7 +203,7 @@ CLOUDINARY_ENABLED = all([
     os.getenv("CLOUDINARY_API_SECRET"),
 ])
 
-if CLOUDINARY_ENABLED:
+if CLOUDINARY_ENABLED and not DEBUG:
     DEFAULT_STORAGE_BACKEND = (
         "cloudinary_storage.storage.MediaCloudinaryStorage"
     )
