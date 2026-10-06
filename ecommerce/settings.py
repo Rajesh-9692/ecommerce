@@ -190,6 +190,7 @@ CLOUDINARY_STORAGE = {
     "CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),
     "API_KEY": os.getenv("CLOUDINARY_API_KEY"),
     "API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
+    "PREFIX": "",
 }
 
 
@@ -241,17 +242,20 @@ EMAIL_HOST = os.getenv("EMAIL_HOST", "")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+if EMAIL_HOST.strip().lower() == "smtp.gmail.com":
+    EMAIL_HOST_PASSWORD = "".join(EMAIL_HOST_PASSWORD.split())
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "true").lower() in {"1", "true", "yes"}
 EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL", "false").lower() in {"1", "true", "yes"}
 EMAIL_TIMEOUT = int(os.getenv("EMAIL_TIMEOUT", "10"))
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND") or (
     "django.core.mail.backends.smtp.EmailBackend"
-    if EMAIL_HOST
+    if EMAIL_HOST or not DEBUG
     else "django.core.mail.backends.console.EmailBackend"
 )
-DEFAULT_FROM_EMAIL = os.getenv(
-    "DEFAULT_FROM_EMAIL",
-    "MyShop Orders <orders@localhost>"
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL") or (
+    f"MyShop Orders <{EMAIL_HOST_USER}>"
+    if EMAIL_HOST_USER
+    else "MyShop Orders <orders@localhost>"
 )
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
